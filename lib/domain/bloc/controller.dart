@@ -257,7 +257,7 @@ class VideoEditorController extends ChangeNotifier {
     if (enddy > _videoHeight) enddy = _videoHeight.floor();
     if (startdx < 0) startdx = 0;
     if (startdy < 0) startdy = 0;
-    return "crop=${enddx - startdx}:${enddy - startdy}:$startdx:$startdy";
+    return "crop=trunc(${enddx - startdx}/2)*2:trunc(${enddy - startdy}/2)*2:$startdx:$startdy";
   }
 
   /// Update the [minCrop] and [maxCrop] with [cacheMinCrop] and [cacheMaxCrop]
@@ -468,7 +468,7 @@ class VideoEditorController extends ChangeNotifier {
     final String rotation =
         _rotation >= 360 || _rotation <= 0 ? "" : _getRotation();
     final String scaleInstruction =
-        scale == 1.0 ? "" : "scale=iw*$scale:ih*$scale";
+        scale == 1.0 ? "" : "scale=trunc(iw*$scale/2)*2:trunc(ih*$scale/2)*2";
 
     // VALIDATE FILTERS
     final List<String> filters = [crop, scaleInstruction, rotation, gif];
